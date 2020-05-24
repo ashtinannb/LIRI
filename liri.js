@@ -35,14 +35,14 @@ function movieThis() {
 
                 console.log(". . . . . . . . . .");
 
-                console.log("Movie Title: " + response.Title);
-                console.log("Release Year: " + response.Year);
-                console.log("IMDB Rating: " + response.imdbRating);
-                console.log("Rotten Tomatoes Rating: " + response.Ratings[1].Value);
-                console.log("Country: " + response.Country);
-                console.log("Language: " + response.Language);
-                console.log("Plot: " + response.Plot);
-                console.log("Actors: " + response.Actors);
+                console.log("Movie Title: " + response.data.Title);
+                console.log("Release Year: " + response.data.Year);
+                console.log("IMDB Rating: " + response.data.imdbRating);
+                console.log("Rotten Tomatoes Rating: " + response.data.Ratings[1].Value);
+                console.log("Country: " + response.data.Country);
+                console.log("Language: " + response.data.Language);
+                console.log("Plot: " + response.data.Plot);
+                console.log("Actors: " + response.data.Actors);
 
                 console.log(". . . . . . . . . .");
 
