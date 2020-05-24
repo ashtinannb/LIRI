@@ -26,7 +26,27 @@ var bandsURL = "https://rest.bandsintown.com/artists/" + term + "/events?app_id=
 
 
 // function movie-this 
+function movieThis() {
+//calling api
+    axios
+        .get(omdbURL)
+        .then( // showing the data called from
+            function(response) {
 
+                console.log(". . . . . . . . . .");
+
+                console.log("Movie Title: " + response.Title);
+                console.log("Release Year: " + response.Year);
+                console.log("IMDB Rating: " + response.imdbRating);
+                console.log("Rotten Tomatoes Rating: " + response.Ratings[1].Value);
+                console.log("Country: " + response.Country);
+                console.log("Language: " + response.Language);
+                console.log("Plot: " + response.Plot);
+                console.log("Actors: " + response.Actors);
+
+                console.log(". . . . . . . . . .");
+
+            })
 // function concert-this
 
 // function spotify-this-song
