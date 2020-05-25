@@ -81,3 +81,13 @@ function doWhatItSays() {
         }
     });
 }
+if (search === "spotify-this-song") {
+    spotifyThisSong(term);
+
+} else if (search === "concert-this") {
+    bandsURL = "https://rest.bandsintown.com/artists/" + term + "/events?app_id=codingbootcamp";
+    concertThis();
+} else {
+    console.log("LIRI SAYS: Sorry, please try again.")
+}
+
