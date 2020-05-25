@@ -10,13 +10,13 @@ var moment = require("moment");
 
 // joins arguments
 var term = process.argv.slice(3).join(" ");
+var search = process.argv[2];
 
 // variable for spotify
 var Spotify = require("node-spotify-api");
 var spotify = new Spotify(keys.spotify);
 
-// variable for movies
-var omdbURL = "http://www.omdbapi.com/?t=" + term + "&y=&plot=short&apikey=trilogy";
+// giving up on movies 
 
 // variable for concerts
 var bandsURL = "https://rest.bandsintown.com/artists/" + term + "/events?app_id=codingbootcamp";
@@ -24,32 +24,45 @@ var bandsURL = "https://rest.bandsintown.com/artists/" + term + "/events?app_id=
 
 //// Functions
 
+// concert-this function
+function concertThis() {
+    //calls api
+    axios.get(bandsURL) //returns data
+        .then(function (response) {
 
-// function movie-this 
-function movieThis() {
-//calling api
-    axios
-        .get(omdbURL)
-        .then( // showing the data called from
-            function(response) {
+            console.log(". . . . . . . . . .");
 
-                console.log(". . . . . . . . . .");
+            for (var i = 0; i < response.data.length; i++) {
 
-                console.log("Movie Title: " + response.data.Title);
-                console.log("Release Year: " + response.data.Year);
-                console.log("IMDB Rating: " + response.data.imdbRating);
-                console.log("Rotten Tomatoes Rating: " + response.data.Ratings[1].Value);
-                console.log("Country: " + response.data.Country);
-                console.log("Language: " + response.data.Language);
-                console.log("Plot: " + response.data.Plot);
-                console.log("Actors: " + response.data.Actors);
+                var dateOfEvent = response.data[i].datetime
+                var dateFormatted = moment().format("MM/DD/YYYY", dateOfEvent)
+                // shows data
+                console.log("-------------------------");
+                console.log("Venue Name: " + response.data[i].venue.name);
+                console.log("Venue Location: " + response.data[i].venue.location);
+                console.log("Date of Event: " + dateFormatted);
+            }
+            console.log(". . . . . . . . . .");
+        });
+}
 
-                console.log(". . . . . . . . . .");
+//spotify this function
+function spotifyThis() {
+    spotify //searches api 
+        .search({
+            type: 'track',
+            query: term
+        })
+        .then(function (response) { //returns and documents artist/song info
 
-            })
-// function concert-this
-
-// function spotify-this-song
-
-// function do-what-it-says
-
+            console.log(". . . . . . . . . .");
+            console.log("Artist: " + response.tracks.items[0].artists[0].name);
+            console.log("Song: " + response.tracks.items[0].name);
+            console.log("Preview Link: " + response.tracks.items[0].external_urls.spotify);
+            console.log("Album: " + response.tracks.items[0].album.name);
+            console.log(". . . . . . . . . .");
+        })
+        .catch(function (err) {
+            console.log(err);
+        });
+}
