@@ -1,10 +1,11 @@
 # LIRI
  LIRI, much like Apple's SIRI, is a Language Interpretation and Recognition Interface. LIRI is used to search for songs, artists, and concerts using API's.
  
- ## Technology Used
+ ## Technology Used:
  ### API's 
  * Spotify 
  * Bands In Town
+ * OMBD
  
  ### NPM's
  * Dotenv
