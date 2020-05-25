@@ -8,7 +8,7 @@ var axios = require("axios");
 var fs = require('fs');
 var moment = require("moment");
 
-// joins arguments
+// joins my arguments
 var term = process.argv.slice(3).join(" ");
 var search = process.argv[2];
 
@@ -16,9 +16,11 @@ var search = process.argv[2];
 var Spotify = require("node-spotify-api");
 var spotify = new Spotify(keys.spotify);
 
-// giving up on movies 
+// variable for movies -- Movie API wip 
+// var omdbURL = "http://www.omdbapi.com/?t=" + term + "&y=&plot=short&apikey=trilogy";
 
-// variable for concerts
+
+// variable for concerts -- Concert API
 var bandsURL = "https://rest.bandsintown.com/artists/" + term + "/events?app_id=codingbootcamp";
 
 
@@ -65,4 +67,17 @@ function spotifyThis() {
         .catch(function (err) {
             console.log(err);
         });
+}
+
+
+// do what it says function
+function doWhatItSays() {
+
+    fs.readFile("random.txt", "utf8", function (error, data) {
+
+        // logs errors
+        if (error) {
+            return console.log(error);
+        }
+    });
 }
