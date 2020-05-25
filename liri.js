@@ -16,8 +16,8 @@ var search = process.argv[2];
 var Spotify = require("node-spotify-api");
 var spotify = new Spotify(keys.spotify);
 
-// variable for movies -- Movie API wip 
-// var omdbURL = "http://www.omdbapi.com/?t=" + term + "&y=&plot=short&apikey=trilogy";
+// variable for movies -- Movie API 
+ var omdbURL = "http://www.omdbapi.com/?t=" + term + "&y=&plot=short&apikey=trilogy";
 
 
 // variable for concerts -- Concert API
@@ -29,8 +29,8 @@ var bandsURL = "https://rest.bandsintown.com/artists/" + term + "/events?app_id=
 // concert-this function
 function concertThis() {
     //calls api
-    axios.get(bandsURL) //returns data
-        .then(function (response) {
+    axios.get(bandsURL) 
+        .then(function (response) { // returns and documents concert info
 
             console.log(". . . . . . . . . .");
 
@@ -47,6 +47,7 @@ function concertThis() {
             console.log(". . . . . . . . . .");
         });
 }
+
 
 //spotify this function
 function spotifyThis() {
@@ -70,11 +71,28 @@ function spotifyThis() {
 }
 
 
+// movie this function
+function movieThis() {
+    axios //searches api
+        .get(omdbURL)
+        .then(function(response) { //returns and documents movie info
+
+                console.log("Movie Title: " + response.data.Title);
+                console.log("Release Year: " + response.data.Year);
+                console.log("IMDB Rating: " + response.data.imdbRating);
+                console.log("Actors: " + response.data.Actors);
+                console.log("Plot: " + response.data.Plot);
+                console.log("Country: " + response.data.Country);
+                console.log(". . . . . . . . . .");
+            });
+        }
+        
+    
+
 // do what it says function
 function doWhatItSays() {
 
     fs.readFile("random.txt", "utf8", function (error, data) {
-
         // logs errors
         if (error) {
             return console.log(error);
@@ -82,12 +100,44 @@ function doWhatItSays() {
     });
 }
 if (search === "spotify-this-song") {
-    spotifyThisSong(term);
+    spotifyThis(term);
+} else if (search === "movie-this") {
+    omdbURL = "http://www.omdbapi.com/?t=" + term + "&y=&plot=short&apikey=trilogy";
+    movieThis();
 
 } else if (search === "concert-this") {
     bandsURL = "https://rest.bandsintown.com/artists/" + term + "/events?app_id=codingbootcamp";
     concertThis();
+
 } else {
     console.log("LIRI SAYS: Sorry, please try again.")
 }
 
+
+
+if (search === "spotify-this-song" && term !== "") {
+    spotifyThis();
+
+} else if (search === "spotify-this-song" && term === "") {
+    term = "All the Small Things";
+} else if (search === "movie-this" && term !== "") {
+    movieThis();
+} else if (search === "movie-this" && term === "") {
+    term = "mr nobody";
+    omdbURL = "http://www.omdbapi.com/?t=" + term + "&y=&plot=short&apikey=trilogy";
+    movieThis();
+
+} else if (search === "concert-this" && term !== "") {
+    concertThis();
+
+} else if (search === "concert-this" && term === "") {
+    term = "Tool";
+    bandsURL = "https://rest.bandsintown.com/artists/" + term + "/events?app_id=codingbootcamp";
+    concertThis();
+
+} else if (search === "do-what-it-says") {
+    doWhatItSays();
+
+} else {
+    console.log("LIRI SAYS: Sorry, I don't understand. Please enter a command.")
+}
